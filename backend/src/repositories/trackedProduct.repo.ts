@@ -34,55 +34,46 @@ export interface CreateTrackedProductInput {
 
 export const trackedProductRepo = {
   async findAll(): Promise<TrackedProduct[]> {
-    const { rows } = await db.query<TrackedProduct>(
+    const pool = await db();
+    const { rows } = await pool.query<TrackedProduct>(
       `SELECT * FROM tracked_products ORDER BY created_at DESC`
     );
     return rows;
   },
 
   async findById(id: string): Promise<TrackedProduct | null> {
-    const { rows } = await db.query<TrackedProduct>(
+    const pool = await db();
+    const { rows } = await pool.query<TrackedProduct>(
       `SELECT * FROM tracked_products WHERE id = $1`,
       [id]
     );
     return rows[0] ?? null;
   },
 
-  async findByStoreProductId(
-    storeProductId: string
-  ): Promise<TrackedProduct | null> {
-    const { rows } = await db.query<TrackedProduct>(
+  async findByStoreProductId(storeProductId: string): Promise<TrackedProduct | null> {
+    const pool = await db();
+    const { rows } = await pool.query<TrackedProduct>(
       `SELECT * FROM tracked_products WHERE store_product_id = $1`,
       [storeProductId]
     );
     return rows[0] ?? null;
   },
 
-  async create(
-    input: CreateTrackedProductInput,
-    client?: PoolClient
-  ): Promise<TrackedProduct> {
-    const runner = client ?? db;
+  async create(input: CreateTrackedProductInput, client?: PoolClient): Promise<TrackedProduct> {
+    const runner = client ?? (await db());
     const { rows } = await runner.query<TrackedProduct>(
       `INSERT INTO tracked_products
          (store_product_id, slug, name, brand, category, sku, target_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
-      [
-        input.store_product_id,
-        input.slug,
-        input.name,
-        input.brand,
-        input.category,
-        input.sku,
-        input.target_url,
-      ]
+      [input.store_product_id, input.slug, input.name, input.brand, input.category, input.sku, input.target_url]
     );
-    return rows[0];
+    return rows[0]!;
   },
 
   async softDelete(id: string): Promise<boolean> {
-    const { rowCount } = await db.query(
+    const pool = await db();
+    const { rowCount } = await pool.query(
       `UPDATE tracked_products SET is_active = false, updated_at = NOW()
        WHERE id = $1 AND is_active = true`,
       [id]
@@ -91,9 +82,41 @@ export const trackedProductRepo = {
   },
 
   async findAllActive(): Promise<TrackedProduct[]> {
-    const { rows } = await db.query<TrackedProduct>(
+    const pool = await db();
+    const { rows } = await pool.query<TrackedProduct>(
       `SELECT * FROM tracked_products WHERE is_active = true ORDER BY created_at ASC`
     );
     return rows;
   },
+
+  async update(id: string, updates: Partial<TrackedProduct>, client?: PoolClient): Promise<TrackedProduct> {
+    const runner = client ?? (await db());
+    const keys = Object.keys(updates);
+    const values = Object.values(updates);
+    
+    if (keys.length === 0) throw new Error('No fields to update');
+    
+    const setClause = keys.map((k, i) => `${k} = $${i + 2}`).join(', ');
+    
+    const { rows } = await runner.query<TrackedProduct>(
+      `UPDATE tracked_products 
+       SET ${setClause}, updated_at = NOW() 
+       WHERE id = $1 RETURNING *`,
+      [id, ...values]
+    );
+    return rows[0]!;
+  },
+
+  async incrementFailure(id: string, client?: PoolClient): Promise<void> {
+    const runner = client ?? (await db());
+    await runner.query(
+      `UPDATE tracked_products 
+       SET consecutive_failures = consecutive_failures + 1, 
+           last_scrape_status = 'failed',
+           last_scraped_at = NOW(),
+           updated_at = NOW()
+       WHERE id = $1`,
+      [id]
+    );
+  }
 };

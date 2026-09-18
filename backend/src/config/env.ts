@@ -2,8 +2,11 @@ import { z } from 'zod';
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Load .env relative to the backend directory regardless of CWD
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+// Load .env.test if in test environment, otherwise load .env
+const envPath = process.env.NODE_ENV === 'test' 
+  ? path.resolve(__dirname, '../../.env.test')
+  : path.resolve(__dirname, '../../.env');
+dotenv.config({ path: envPath });
 
 const EnvSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
@@ -13,6 +16,7 @@ const EnvSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
+  DB_SCHEMA: z.string().optional(),
   FRONTEND_ORIGIN: z.string().url().default('http://localhost:5173'),
   CRON_SECRET: z.string().min(8, 'CRON_SECRET must be at least 8 characters'),
   // Lock TTL must be strictly greater than scrape timeout
