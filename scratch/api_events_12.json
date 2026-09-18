@@ -1,0 +1,126 @@
+[
+  {
+    "type": "REQ",
+    "method": "GET",
+    "url": "https://demo.inelabteamdev.com/api/product/12",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/12",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQ",
+    "method": "GET",
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/12",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "status": 200,
+    "url": "https://demo.inelabteamdev.com/api/product/12",
+    "body": {
+      "id": 12,
+      "slug": "basecamp-cloudbook-pro",
+      "name": "Basecamp Cloudbook Pro",
+      "brand": "Basecamp",
+      "category": "Laptops",
+      "sku": "BAS-10012",
+      "description": "The Basecamp Cloudbook Pro. A dependable laptops pick with a clean, no-nonsense design and the everyday features you actually use.",
+      "specs": {
+        "warranty": "1 year warranty, extendable to 2 on registration",
+        "inTheBox": "Cloudbook, Recovery key card, Power cord, Microfibre cloth, Warranty card",
+        "countryOfOrigin": "Mexico",
+        "returns": "14-day return, restocking fee applies",
+        "support": "Phone and email, 10am\u20136pm IST, Mon\u2013Sat",
+        "weightGrams": 1043,
+        "material": "Recycled aluminium",
+        "colour": "Ice Blue",
+        "modelYear": 2021
+      },
+      "reviews": [
+        {
+          "id": "12-r1",
+          "author": "Lakshmi T.",
+          "rating": 5,
+          "title": "No complaints at all",
+          "body": "Been using this daily for about three months now. It does the one job it advertises and does it well. Second Basecamp product I own and both have lasted. Holding up well so far.",
+          "date": "2024-09-08",
+          "verifiedPurchase": true,
+          "helpfulVotes": 56
+        },
+        {
+          "id": "12-r3",
+          "author": "Yusuf D.",
+          "rating": 1,
+          "title": "Disappointed",
+          "body": "Wanted to like this one. Documentation is thin and the app is worse. Packaging arrived crushed as well. Going with a different brand.",
+          "date": "2024-08-16",
+          "verifiedPurchase": false,
+          "helpfulVotes": 184
+        },
+        {
+          "id": "12-r4",
+          "author": "Meera P.",
+          "rating": 3,
+          "title": "Good, with caveats",
+          "body": "It is fine, but I expected slightly more. It works, though the instructions are close to useless. About what I expected at this price. Still, I am keeping it.",
+          "date": "2024-06-16",
+          "verifiedPurchase": true,
+          "helpfulVotes": 222
+        },
+        {
+          "id": "12-r2",
+          "author": "Siddharth H.",
+          "rating": 3,
+          "title": "Good, with caveats",
+          "body": "It is fine, but I expected slightly more. Performance is fine, the packaging was a mess. Basecamp have made better, but this is serviceable. Good value, not a standout.",
+          "date": "2024-04-05",
+          "verifiedPurchase": true,
+          "helpfulVotes": 109
+        }
+      ]
+    }
+  },
+  {
+    "type": "RES",
+    "status": 200,
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "body": {
+      "revision": 625003,
+      "variant": 1,
+      "validUntil": 1789759053511,
+      "classes": {
+        "priceWrap": "pw-k2",
+        "priceValue": "pv-k2",
+        "mrp": "mr-k2",
+        "sale": "sl-k2",
+        "badge": "bd-k2",
+        "rating": "rt-k2",
+        "seller": "sr-k2",
+        "delivery": "dl-k2",
+        "stock": "st-k2"
+      },
+      "order": [
+        "stock",
+        "delivery",
+        "rating",
+        "seller"
+      ],
+      "priceTag": "div",
+      "priceCarrier": "split",
+      "ratingAria": false,
+      "sellerTitle": false
+    }
+  }
+]

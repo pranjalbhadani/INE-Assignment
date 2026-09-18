@@ -1,0 +1,214 @@
+[
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/product/48",
+    "method": "GET",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\""
+    },
+    "post_data": null
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/product/48",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/assets/index-B9UiQq4X.js",
+    "method": "GET",
+    "headers": {
+      "origin": "https://demo.inelabteamdev.com",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/48",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/assets/index-DrctpSuy.css",
+    "method": "GET",
+    "headers": {
+      "origin": "https://demo.inelabteamdev.com",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/48",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/assets/index-DrctpSuy.css",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/assets/index-B9UiQq4X.js",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/api/product/48",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/48",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/48",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQUEST",
+    "url": "https://demo.inelabteamdev.com/favicon.svg",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/48",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/api/product/48",
+    "status": 200,
+    "body": {
+      "id": 48,
+      "slug": "meridian-travel-adapter-pro",
+      "name": "Meridian Travel Adapter Pro",
+      "brand": "Meridian",
+      "category": "Power",
+      "sku": "MER-10048",
+      "description": "The Meridian Travel Adapter Pro. A dependable power pick with a clean, no-nonsense design and the everyday features you actually use.",
+      "specs": {
+        "warranty": "2 years manufacturer warranty",
+        "inTheBox": "Travel Adapter, Travel pouch, Warranty card, Quick-start guide, USB-C to USB-C cable",
+        "countryOfOrigin": "Portugal",
+        "returns": "10-day replacement, original packaging",
+        "support": "Phone and email, 10am\u20136pm IST, Mon\u2013Sat",
+        "weightGrams": 551,
+        "material": "Flame-retardant polycarbonate",
+        "colour": "Matte Black",
+        "modelYear": 2021
+      },
+      "reviews": [
+        {
+          "id": "48-r3",
+          "author": "Yusuf R.",
+          "rating": 5,
+          "title": "No complaints at all",
+          "body": "Replaced a five-year-old unit with this. Nothing has rattled loose or started creaking yet. Meridian seem to have got this one right. Happy to recommend it.",
+          "date": "2025-05-03",
+          "verifiedPurchase": true,
+          "helpfulVotes": 187
+        },
+        {
+          "id": "48-r4",
+          "author": "Manish K.",
+          "rating": 5,
+          "title": "Would buy again",
+          "body": "Replaced a five-year-old unit with this. Nothing has rattled loose or started creaking yet. Matches the listing description exactly. Happy to recommend it.",
+          "date": "2025-01-17",
+          "verifiedPurchase": true,
+          "helpfulVotes": 6
+        },
+        {
+          "id": "48-r1",
+          "author": "Lakshmi K.",
+          "rating": 5,
+          "title": "Exactly what I wanted",
+          "body": "Picked it up on a whim and it has earned its place. Setup took under ten minutes with no surprises. Meridian seem to have got this one right. Would buy the same one again.",
+          "date": "2024-05-25",
+          "verifiedPurchase": false,
+          "helpfulVotes": 58
+        },
+        {
+          "id": "48-r5",
+          "author": "Rhea N.",
+          "rating": 5,
+          "title": "Exactly what I wanted",
+          "body": "Replaced a five-year-old unit with this. It does the one job it advertises and does it well. Meridian seem to have got this one right. No regrets.",
+          "date": "2023-11-27",
+          "verifiedPurchase": true,
+          "helpfulVotes": 151
+        },
+        {
+          "id": "48-r2",
+          "author": "Priya C.",
+          "rating": 5,
+          "title": "Worth every rupee",
+          "body": "Bought this after returning two other brands. Build quality is genuinely good for the price. Packaging was tidy and nothing was missing. No regrets.",
+          "date": "2023-10-13",
+          "verifiedPurchase": false,
+          "helpfulVotes": 89
+        }
+      ]
+    }
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "status": 200,
+    "body": {
+      "revision": 625003,
+      "variant": 1,
+      "validUntil": 1789759053511,
+      "classes": {
+        "priceWrap": "pw-k2",
+        "priceValue": "pv-k2",
+        "mrp": "mr-k2",
+        "sale": "sl-k2",
+        "badge": "bd-k2",
+        "rating": "rt-k2",
+        "seller": "sr-k2",
+        "delivery": "dl-k2",
+        "stock": "st-k2"
+      },
+      "order": [
+        "stock",
+        "delivery",
+        "rating",
+        "seller"
+      ],
+      "priceTag": "div",
+      "priceCarrier": "split",
+      "ratingAria": false,
+      "sellerTitle": false
+    }
+  },
+  {
+    "type": "RESPONSE",
+    "url": "https://demo.inelabteamdev.com/favicon.svg",
+    "status": 200,
+    "body": null
+  }
+]

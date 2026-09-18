@@ -1,0 +1,322 @@
+e),o=new Uint8Array(a[n(553)]);
+for(let e=0;
+r[n(574)](e,a[n(553)]);
+e++)o[e]=a[e]^i[r[n(504)](e,i[n(553)])];
+let s=JSON[n(563)](new TextDecoder()[n(490)](o));
+return{
+shown:s.p,mrp:s.m,sale:s.n,badgePct:s.b,stock:s.s,currency:s.c,at:s.t,rating:s.r,ratingCount:s.rc,seller:s.sl,deliveryDays:s.dd,variant:s.v,pending:r[n(569)](s.g,1),format:s.f,triple:s.x===1
+}
+
+}
+var Tr=class extends Error{
+
+}
+,Er=class extends Error{
+[P(565)];
+constructor(e){
+let t=P;
+super(t(575)+t(535)+e),this[t(565)]=e
+}
+
+}
+;
+async function Dr(e,t){
+let n=P,r={
+aCMDP:function(e,t){
+return e(t)
+}
+,KgDgW:function(e,t,n,r){
+return e(t,n,r)
+}
+,cHuAK:function(e,t,n){
+return e(t,n)
+}
+,yuQWu:n(530),amATO:n(517)+n(514)+n(519),YjJGK:function(e,t){
+return e===t
+}
+,KEkzK:function(e,t){
+return e===t
+}
+,rNpAq:function(e,t,n){
+return e(t,n)
+}
+
+}
+,i=await fetch(n(566)+n(536)+`ge`);
+if(!i.ok)throw new Er(i[n(565)]);
+let a=await i[n(519)](),o=await r[n(532)](cr,t),s=gr(o),c=await Cr(a[n(500)],br(a[n(568)],s)),l=xr(a[n(568)],a[n(558)+n(495)]),u=r[n(549)](yr,a[n(568)],c,s),d={
+...a
+}
+;
+d[n(520)]=l,d[n(543)+`d`]=u,d[n(538)+`t`]=c,d[n(497)]=o,d[n(509)+n(605)]=e;
+let f=await r[n(515)](fetch,``+(n(588)+n(489)),{
+method:r[n(531)],headers:{
+"Content-Type":r[n(540)]
+}
+,body:JSON[n(582)+n(518)](d)
+}
+);
+if(r[n(525)](f[n(565)],429))throw new Er(429);
+if(!f.ok)throw new Tr(n(599)+n(501)+n(579));
+let{
+token:p
+}
+=await f[n(519)](),m={
+
+}
+;
+m[n(508)+n(551)+`n`]=n(586)+` `+p;
+let h={
+
+}
+;
+h[n(576)+`s`]=m;
+let g=await fetch(n(585)+n(523)+`s/`+e+n(526),h);
+if(g[n(565)]===401||r[n(488)](g[n(565)],403))throw new Tr(n(591)+n(554));
+if(!g.ok)throw new Er(g[n(565)]);
+let _=await g[n(519)]();
+return r[n(604)](wr,_.e,p)
+}
+var Or=40,kr=40,Ar=class{
+hoverAt=0;
+lastMoveAt=0;
+moves=[];
+detach=null;
+req;
+constructor(e){
+this.req=e
+}
+start(){
+
+}
+stop(){
+this.detach?.(),this.detach=null
+}
+enter(){
+this.hoverAt||=Date.now()
+}
+move(e,t){
+let n=Date.now();
+n-this.lastMoveAt<kr||(this.lastMoveAt=n,this.hoverAt||=n,this.moves.push([Math.round(e),Math.round(t),n]),this.moves.length>Or&&this.moves.shift())
+}
+missing(){
+return this.moves.length<this.req.minMoves?`Hover over the price area to load the current price.`:this.hoverAt&&Date.now()-this.hoverAt<this.req.minDwellMs?`Hold on — checking availability…`:null
+}
+ready(){
+return this.missing()===null
+}
+snapshot(e){
+let t=Date.now();
+return{
+hoverAt:this.hoverAt,dwellMs:this.hoverAt?t-this.hoverAt:0,moves:this.moves.slice(),clickAt:t,trusted:e
+}
+
+}
+
+}
+,jr=6,Mr=`​`,Nr=`\xA0`,Pr=e=>new Promise(t=>setTimeout(t,e));
+function Fr(e,t){
+return new Intl.NumberFormat(`en-IN`,{
+style:`currency`,currency:t,maximumFractionDigits:0
+}
+).format(e)
+}
+function Ir(e,t,n){
+let r=Fr(e,t);
+switch(n){
+case`spaced`:return r.replace(/,/g,` `);
+case`euro`:return`${
+r.replace(/,/g,`.`)
+}
+,00`;
+case`trailing`:return`${
+r
+}
+/- (incl. of all taxes)`;
+case`unicode`:return r.replace(/[0-9]/g,e=>String.fromCharCode(65296+Number(e)));
+case`nbsp`:return r.split(``).join(`\xA0​`);
+case`lakh`:return`Rs.${
+Nr
+}
+${
+new Intl.NumberFormat(`en-IN`,{
+minimumFractionDigits:2
+}
+).format(e)
+}
+`;
+default:return r
+}
+
+}
+function Lr(e){
+return e.split(``).map((t,n)=>(0,N.jsxs)(`span`,{
+children:[t,n<e.length-1?Mr:``]
+}
+,n))
+}
+var Rr=[e=>`In stock · ${
+e
+}
+ left`,e=>`Only ${
+e
+}
+ left`,e=>`${
+e
+}
+ in stock`,e=>`Selling fast — ${
+e
+}
+ left`,e=>`Hurry, just ${
+e
+}
+ left`];
+function zr(e){
+return Rr[e%Rr.length](e)
+}
+function Br(e){
+let t=.6+e%37/37*.7;
+return Math.max(1,Math.round(e*t))
+}
+function Vr(){
+return Math.random().toString(36).slice(2,8)
+}
+function Hr(e){
+return e>=1e3?`${
+(e/1e3).toFixed(1).replace(/\.0$/,``)
+}
+k`:String(e)
+}
+function Ur({
+productId:e,layout:t
+}
+){
+let[n,r]=(0,x.useState)({
+phase:`idle`,attempt:0
+}
+),[,i]=(0,x.useState)(0),[a]=(0,x.useState)(()=>new Ar({
+minMoves:8,minDwellMs:600
+}
+)),o=(0,x.useRef)(!1);
+(0,x.useEffect)(()=>{
+a.start();
+let e=window.setInterval(()=>i(e=>e+1),250);
+return()=>{
+a.stop(),window.clearInterval(e)
+}
+
+}
+,[a]);
+let s=(0,x.useCallback)(async()=>{
+r({
+phase:`loading`,attempt:1
+}
+);
+for(let t=1;
+t<=jr;
+t++)try{
+let n=await Dr(e,a.snapshot(o.current));
+r({
+phase:`success`,attempt:t,quote:n
+}
+);
+return
+}
+catch(e){
+if(e instanceof Er&&t<jr){
+r({
+phase:`retrying`,attempt:t+1,message:e.message
+}
+),await Pr(300*t);
+continue
+}
+r({
+phase:`error`,attempt:t,message:e instanceof Error?e.message:`failed`
+}
+);
+return
+}
+
+}
+,[e,a]),c=e=>{
+o.current=e.nativeEvent.isTrusted,Xn(()=>void s())()
+}
+,l=e=>a.move(e.clientX,e.clientY),u=()=>a.enter(),d=(0,x.useMemo)(()=>{
+if(!n.quote)return null;
+let e=n.quote;
+return{
+rot:`v${
+Vr()
+}
+`,d1:Fr(Br(e.shown),e.currency),d2:Fr(Br(e.shown+7),e.currency)
+}
+
+}
+,[n.quote]),f=t?.classes,p=a.missing();
+if(n.phase===`idle`)return(0,N.jsxs)(`div`,{
+className:`price-block price-idle ${
+f?.priceWrap??``
+}
+`,onMouseMove:l,onMouseEnter:u,children:[(0,N.jsxs)(`div`,{
+children:[(0,N.jsx)(`p`,{
+className:`price-status`,children:`Price hidden`
+}
+),(0,N.jsx)(`p`,{
+className:`price-substatus`,children:p??`Check the current price and availability.`
+}
+)]
+}
+),(0,N.jsx)(`button`,{
+type:`button`,className:`btn btn-primary`,"aria-label":`Reveal price`,disabled:p!==null,onClick:c,children:`Reveal price`
+}
+)]
+}
+);
+if(n.phase===`loading`||n.phase===`retrying`)return(0,N.jsxs)(`div`,{
+className:`price-block ${
+f?.priceWrap??``
+}
+`,"aria-live":`polite`,"aria-busy":`true`,children:[(0,N.jsx)(`div`,{
+className:`spinner`,"aria-hidden":`true`
+}
+),(0,N.jsxs)(`div`,{
+children:[(0,N.jsx)(`p`,{
+className:`price-status`,children:n.phase===`loading`?`Loading current price…`:`Retrying (attempt ${
+n.attempt
+}
+/${
+jr
+}
+)…`
+}
+),n.phase===`retrying`&&(0,N.jsxs)(`p`,{
+className:`price-substatus`,children:[`Store responded with “`,n.message,`”.`]
+}
+)]
+}
+)]
+}
+);
+if(n.phase===`error`)return(0,N.jsxs)(`div`,{
+className:`price-block price-error ${
+f?.priceWrap??``
+}
+`,"aria-live":`assertive`,children:[(0,N.jsxs)(`p`,{
+className:`price-status`,children:[`Couldn’t load the price after `,n.attempt,` attempts.`]
+}
+),(0,N.jsx)(`p`,{
+className:`price-substatus`,children:n.message
+}
+),(0,N.jsx)(`button`,{
+type:`button`,className:`btn btn-primary`,onClick:c,children:`Try again`
+}
+)]
+}
+);
+let m=n.quote,h=Ir(m.shown,m.currency,m.format),g=new Date(m.at+m.deliveryDays*864e5),_={
+rating:(0,N.jsxs)(`div`,{
+className:f?.rating,...t?.ratingAria?{
+"aria-label":`Rated ${
+m.rating
+}
+ ou

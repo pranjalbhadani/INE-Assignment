@@ -1,0 +1,285 @@
+[
+  {
+    "type": "REQ",
+    "time": 1789751921.2795315,
+    "url": "https://demo.inelabteamdev.com/product/675",
+    "method": "GET",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\""
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.3997207,
+    "url": "https://demo.inelabteamdev.com/product/675",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751921.406042,
+    "url": "https://demo.inelabteamdev.com/assets/index-B9UiQq4X.js",
+    "method": "GET",
+    "headers": {
+      "origin": "https://demo.inelabteamdev.com",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751921.4064412,
+    "url": "https://demo.inelabteamdev.com/assets/index-DrctpSuy.css",
+    "method": "GET",
+    "headers": {
+      "origin": "https://demo.inelabteamdev.com",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.5035868,
+    "url": "https://demo.inelabteamdev.com/assets/index-DrctpSuy.css",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.5578308,
+    "url": "https://demo.inelabteamdev.com/assets/index-B9UiQq4X.js",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751921.6689057,
+    "url": "https://demo.inelabteamdev.com/api/product/675",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751921.669424,
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751921.6697776,
+    "url": "https://demo.inelabteamdev.com/favicon.svg",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.7060084,
+    "url": "https://demo.inelabteamdev.com/api/product/675",
+    "status": 200,
+    "body": {
+      "id": 675,
+      "slug": "larkspur-trackpad-s",
+      "name": "Larkspur Trackpad S",
+      "brand": "Larkspur",
+      "category": "Peripherals",
+      "sku": "LAR-10675",
+      "description": "The Larkspur Trackpad S. A dependable peripherals pick with a clean, no-nonsense design and the everyday features you actually use.",
+      "specs": {
+        "warranty": "1 year manufacturer warranty",
+        "inTheBox": "Trackpad, Keycap puller, Carry sleeve, Spare switches",
+        "countryOfOrigin": "China",
+        "returns": "15-day replacement, unopened",
+        "support": "Email, chat and phone, 9am\u20139pm IST",
+        "weightGrams": 524,
+        "material": "PBT and ABS",
+        "colour": "Midnight Navy",
+        "modelYear": 2025
+      },
+      "reviews": [
+        {
+          "id": "675-r2",
+          "author": "Nisha H.",
+          "rating": 5,
+          "title": "Solid, boring, reliable",
+          "body": "Been using this daily for about three months now. It does the one job it advertises and does it well. Packaging was tidy and nothing was missing. Holding up well so far.",
+          "date": "2025-04-29",
+          "verifiedPurchase": false,
+          "helpfulVotes": 149
+        },
+        {
+          "id": "675-r1",
+          "author": "Kavya J.",
+          "rating": 3,
+          "title": "Mostly happy",
+          "body": "It is fine, but I expected slightly more. Slightly heavier in hand than the listing suggests. Close enough to the listing description. Good value, not a standout.",
+          "date": "2024-08-15",
+          "verifiedPurchase": true,
+          "helpfulVotes": 170
+        },
+        {
+          "id": "675-r3",
+          "author": "Pooja S.",
+          "rating": 5,
+          "title": "Better than expected",
+          "body": "Replaced a five-year-old unit with this. Nothing has rattled loose or started creaking yet. Second Larkspur product I own and both have lasted. Holding up well so far.",
+          "date": "2024-08-02",
+          "verifiedPurchase": true,
+          "helpfulVotes": 22
+        }
+      ]
+    }
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.7062323,
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "status": 200,
+    "body": {
+      "revision": 625003,
+      "variant": 1,
+      "validUntil": 1789759053511,
+      "classes": {
+        "priceWrap": "pw-k2",
+        "priceValue": "pv-k2",
+        "mrp": "mr-k2",
+        "sale": "sl-k2",
+        "badge": "bd-k2",
+        "rating": "rt-k2",
+        "seller": "sr-k2",
+        "delivery": "dl-k2",
+        "stock": "st-k2"
+      },
+      "order": [
+        "stock",
+        "delivery",
+        "rating",
+        "seller"
+      ],
+      "priceTag": "div",
+      "priceCarrier": "split",
+      "ratingAria": false,
+      "sellerTitle": false
+    }
+  },
+  {
+    "type": "RES",
+    "time": 1789751921.783736,
+    "url": "https://demo.inelabteamdev.com/favicon.svg",
+    "status": 200,
+    "body": null
+  },
+  {
+    "type": "REQ",
+    "time": 1789751924.9977188,
+    "url": "https://demo.inelabteamdev.com/api/challenge",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751925.0221722,
+    "url": "https://demo.inelabteamdev.com/api/challenge",
+    "status": 200,
+    "body": {
+      "salt": "cbd68e43f1f496801a4b4d66715d69cd",
+      "ts": 1789751925594,
+      "difficulty": 3,
+      "csig": "ec3bf9d70962b57060767e9e1328035f756c41c42c97f8141ee812eb0ebcfbea",
+      "wasm": "AGFzbQEAAAABBgFgAX8BfwMCAQAHBQEBZgAACuMEAeAEACAAQeLhkNl4c0GYncCZB2tBqMbzjAFzQQN3QdmSouIAa0Ht/aBKc0HXx5b/enNBtMn9zHlrQY6D1d4Hc0Hx1r+WemxBDHdBt7GRrgVsQQ13QYeumPp6bEHF/amCBWtBjcXfoQFsQZne4KR9akEcd0HNvcyZf2tBmpa7iwVrQQp3Qd6V89oDc0G6u+qGBWtBxZb7w31sQf/+6PcDa0HLlpjHBGtBhe6v0QJrQced1fl7a0Gs/J6tfXNB47rgvwFqQQx3QYbd8bQBakEYd0H/2cezfXNBv7v4mAJsQRV3QZni54Z/c0G4zde1B2pBldHYpn1zQZC+yYsDakGr9PzBfWpBzKawzwdqQZWIj6IFc0Gajcr3fXNB6dqJ635qQZmRiN98c0GCrIyDBWpB45iRugNsQRl3QQR3QQV3QR93QR53QbvCiccCbEGh1PbzeGpBlc+jvQVrQfri8uQCa0GBpaTYBmtBupbb4nxrQdaRnMJ7c0G/mt2bBWpBvevn2H5sQaHFsYF6c0Hhso91bEGO25GHfXNBmJuTvQVqQd69kJR/a0HQ1cyBfXNBuvvlm3tqQczR//14a0Gfw6TAfXNBgp7J1HxzQcj0itMAc0HS2PmBBmtBFndBEndB/YvetHlrQdeF6P16bEGblZ1HbEHpy6TtAGxBg+Hj5HpqQeqOkvkEakGN0tCxemtB0+T0tnxsQcfG34wHakH+wP7lAHNBnJGp8gBqQfWymOwGbEEfd0Hg7Zt6c0G7+ubLA2xB2u+QzQVzQbul6PABa0Gj+Ze4fmxB08DBjgFsQdXritsFbAs="
+    }
+  },
+  {
+    "type": "REQ",
+    "time": 1789751925.4817905,
+    "url": "https://demo.inelabteamdev.com/api/session",
+    "method": "POST",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "content-type": "application/json",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": "{\"salt\":\"cbd68e43f1f496801a4b4d66715d69cd\",\"ts\":1789751925594,\"difficulty\":3,\"csig\":\"ec3bf9d70962b57060767e9e1328035f756c41c42c97f8141ee812eb0ebcfbea\",\"wasm\":\"AGFzbQEAAAABBgFgAX8BfwMCAQAHBQEBZgAACuMEAeAEACAAQeLhkNl4c0GYncCZB2tBqMbzjAFzQQN3QdmSouIAa0Ht/aBKc0HXx5b/enNBtMn9zHlrQY6D1d4Hc0Hx1r+WemxBDHdBt7GRrgVsQQ13QYeumPp6bEHF/amCBWtBjcXfoQFsQZne4KR9akEcd0HNvcyZf2tBmpa7iwVrQQp3Qd6V89oDc0G6u+qGBWtBxZb7w31sQf/+6PcDa0HLlpjHBGtBhe6v0QJrQced1fl7a0Gs/J6tfXNB47rgvwFqQQx3QYbd8bQBakEYd0H/2cezfXNBv7v4mAJsQRV3QZni54Z/c0G4zde1B2pBldHYpn1zQZC+yYsDakGr9PzBfWpBzKawzwdqQZWIj6IFc0Gajcr3fXNB6dqJ635qQZmRiN98c0GCrIyDBWpB45iRugNsQRl3QQR3QQV3QR93QR53QbvCiccCbEGh1PbzeGpBlc+jvQVrQfri8uQCa0GBpaTYBmtBupbb4nxrQdaRnMJ7c0G/mt2bBWpBvevn2H5sQaHFsYF6c0Hhso91bEGO25GHfXNBmJuTvQVqQd69kJR/a0HQ1cyBfXNBuvvlm3tqQczR//14a0Gfw6TAfXNBgp7J1HxzQcj0itMAc0HS2PmBBmtBFndBEndB/YvetHlrQdeF6P16bEGblZ1HbEHpy6TtAGxBg+Hj5HpqQeqOkvkEakGN0tCxemtB0+T0tnxsQcfG34wHakH+wP7lAHNBnJGp8gBqQfWymOwGbEEfd0Hg7Zt6c0G7+ubLA2xB2u+QzQVzQbul6PABa0Gj+Ze4fmxB08DBjgFsQdXritsFbAs=\",\"nonce\":1035,\"derived\":\"51e1dc10d606a538054059ec2f521997ba688489a5f8a2770e2d965296046519\",\"wasmOut\":-575106757,\"att\":\"{\\\"env\\\":{\\\"canvas\\\":\\\"4f3838a91e5300f7\\\",\\\"gl\\\":\\\"903eb5225d3ce236\\\",\\\"hc\\\":4,\\\"scr\\\":[1280,800,1.0000000149011612],\\\"frames\\\":[16.7,16.6,16.7,16.6,17.3,16.2,16.6,16.7],\\\"at\\\":1789751925245},\\\"ix\\\":{\\\"hoverAt\\\":1789751922882,\\\"dwellMs\\\":2099,\\\"moves\\\":[[822,458,1789751922883],[812,443,1789751922995],[832,453,1789751923082],[812,463,1789751923179],[832,443,1789751923278],[812,453,1789751923364],[832,463,1789751923463],[812,443,1789751923561],[832,453,1789751923650],[812,463,1789751923740],[832,443,1789751923831],[812,453,1789751923931],[832,463,1789751924030],[1065,458,1789751924978]],\\\"clickAt\\\":1789751924981,\\\"trusted\\\":true}}\",\"productId\":675}"
+  },
+  {
+    "type": "REQ",
+    "time": 1789751925.5180073,
+    "url": "https://demo.inelabteamdev.com/api/products/675/price",
+    "method": "GET",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "authorization": "Bearer R0VUfC9hcGkvcHJvZHVjdHMvNjc1L3ByaWNlfDY3NXxhOThmMmViYjBjOTg2OTlmOTAyZTJhNjh8MTc4OTc1MTkyNjA4OA.f6c10988168c49b158b133a6e1e6fb6fe94e60f7248ea980e02b5f2f3b71ead1",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "time": 1789751925.5185359,
+    "url": "https://demo.inelabteamdev.com/api/session",
+    "status": 200,
+    "body": {
+      "token": "R0VUfC9hcGkvcHJvZHVjdHMvNjc1L3ByaWNlfDY3NXxhOThmMmViYjBjOTg2OTlmOTAyZTJhNjh8MTc4OTc1MTkyNjA4OA.f6c10988168c49b158b133a6e1e6fb6fe94e60f7248ea980e02b5f2f3b71ead1",
+      "expiresInMs": 30000
+    }
+  },
+  {
+    "type": "RES",
+    "time": 1789751925.5827665,
+    "url": "https://demo.inelabteamdev.com/api/products/675/price",
+    "status": 200,
+    "body": {
+      "productId": 675,
+      "v": 1,
+      "e": "wA6s35Erd6cGWX6aVbqwU1VG994T0GC/fXiVXGtoRtaLAP6eiSBm3344cJQa7KhbXUL30QjHM6R1e5xCfTdGnpkW6NGJaCe0Cltniwq0qBIAV/XKfJ1g/yso3gQmdQHM6FmsjcdjZroSDjaaAqymQxpX9cpMhmPxIm+BUi45Xt2XDqTfkSo5",
+      "serverTime": 1789751926124
+    }
+  }
+]

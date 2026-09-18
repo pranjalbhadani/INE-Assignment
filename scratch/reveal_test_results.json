@@ -1,0 +1,61 @@
+[
+  {
+    "productId": 48,
+    "status": "button_disabled"
+  },
+  {
+    "productId": 48,
+    "status": "error",
+    "error": "Price hidden",
+    "substatus": "Check the current price and availability."
+  },
+  {
+    "productId": 675,
+    "status": "error",
+    "error": "Price hidden",
+    "substatus": "Check the current price and availability."
+  },
+  {
+    "productId": 12,
+    "status": "success",
+    "stock": "102 in stock",
+    "elements": [
+      {
+        "tag": "SPAN",
+        "class": "price-value",
+        "display": "none",
+        "text": "\u20b91,12,460"
+      },
+      {
+        "tag": "SPAN",
+        "class": "mr-k2",
+        "display": "block",
+        "text": "\u20b91,56,665"
+      },
+      {
+        "tag": "SPAN",
+        "class": "sl-k2",
+        "display": "block",
+        "text": "Deal price \u20b91,43,349"
+      },
+      {
+        "tag": "DIV",
+        "class": "v8g8otd pv-k2",
+        "display": "block",
+        "text": "\u20b9\u200b1\u200b,\u200b3\u200b0\u200b,\u200b0\u200b3\u200b2"
+      },
+      {
+        "tag": "SPAN",
+        "class": "bd-k2",
+        "display": "block",
+        "text": "17% off"
+      },
+      {
+        "tag": "SPAN",
+        "class": "amount",
+        "display": "none",
+        "text": "\u20b91,29,688"
+      }
+    ]
+  }
+]

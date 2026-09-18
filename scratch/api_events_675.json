@@ -1,0 +1,116 @@
+[
+  {
+    "type": "REQ",
+    "method": "GET",
+    "url": "https://demo.inelabteamdev.com/api/product/675",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "REQ",
+    "method": "GET",
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "headers": {
+      "sec-ch-ua-platform": "\"Windows\"",
+      "referer": "https://demo.inelabteamdev.com/product/675",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"153\", \"Not_A Brand\";v=\"8\"",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "post_data": null
+  },
+  {
+    "type": "RES",
+    "status": 200,
+    "url": "https://demo.inelabteamdev.com/api/product/675",
+    "body": {
+      "id": 675,
+      "slug": "larkspur-trackpad-s",
+      "name": "Larkspur Trackpad S",
+      "brand": "Larkspur",
+      "category": "Peripherals",
+      "sku": "LAR-10675",
+      "description": "The Larkspur Trackpad S. A dependable peripherals pick with a clean, no-nonsense design and the everyday features you actually use.",
+      "specs": {
+        "warranty": "1 year manufacturer warranty",
+        "inTheBox": "Trackpad, Keycap puller, Carry sleeve, Spare switches",
+        "countryOfOrigin": "China",
+        "returns": "15-day replacement, unopened",
+        "support": "Email, chat and phone, 9am\u20139pm IST",
+        "weightGrams": 524,
+        "material": "PBT and ABS",
+        "colour": "Midnight Navy",
+        "modelYear": 2025
+      },
+      "reviews": [
+        {
+          "id": "675-r2",
+          "author": "Nisha H.",
+          "rating": 5,
+          "title": "Solid, boring, reliable",
+          "body": "Been using this daily for about three months now. It does the one job it advertises and does it well. Packaging was tidy and nothing was missing. Holding up well so far.",
+          "date": "2025-04-29",
+          "verifiedPurchase": false,
+          "helpfulVotes": 149
+        },
+        {
+          "id": "675-r1",
+          "author": "Kavya J.",
+          "rating": 3,
+          "title": "Mostly happy",
+          "body": "It is fine, but I expected slightly more. Slightly heavier in hand than the listing suggests. Close enough to the listing description. Good value, not a standout.",
+          "date": "2024-08-15",
+          "verifiedPurchase": true,
+          "helpfulVotes": 170
+        },
+        {
+          "id": "675-r3",
+          "author": "Pooja S.",
+          "rating": 5,
+          "title": "Better than expected",
+          "body": "Replaced a five-year-old unit with this. Nothing has rattled loose or started creaking yet. Second Larkspur product I own and both have lasted. Holding up well so far.",
+          "date": "2024-08-02",
+          "verifiedPurchase": true,
+          "helpfulVotes": 22
+        }
+      ]
+    }
+  },
+  {
+    "type": "RES",
+    "status": 200,
+    "url": "https://demo.inelabteamdev.com/api/layout",
+    "body": {
+      "revision": 625003,
+      "variant": 1,
+      "validUntil": 1789759053511,
+      "classes": {
+        "priceWrap": "pw-k2",
+        "priceValue": "pv-k2",
+        "mrp": "mr-k2",
+        "sale": "sl-k2",
+        "badge": "bd-k2",
+        "rating": "rt-k2",
+        "seller": "sr-k2",
+        "delivery": "dl-k2",
+        "stock": "st-k2"
+      },
+      "order": [
+        "stock",
+        "delivery",
+        "rating",
+        "seller"
+      ],
+      "priceTag": "div",
+      "priceCarrier": "split",
+      "ratingAria": false,
+      "sellerTitle": false
+    }
+  }
+]
