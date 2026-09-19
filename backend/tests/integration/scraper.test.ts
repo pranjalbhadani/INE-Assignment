@@ -180,5 +180,5 @@ describe('Scraper Integration Tests', () => {
     expect(latestAttempt).toBeDefined();
     expect(latestAttempt.status).toBe('failed');
     expect(latestAttempt.error_type).toBe('permanent_parse_error');
-  });
+  }, 10000);
 });

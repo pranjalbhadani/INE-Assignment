@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Activity, AlertTriangle, CheckCircle2, Clock, Package } from "lucide-react";
+import { Activity, AlertTriangle, CheckCircle2, Package } from "lucide-react";
 import { api } from "@/lib/api";
 import { ScraperStatus } from "@/types/api";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,7 +16,7 @@ export function SystemStatusStrip() {
       try {
         const res = await api.getScraperStatus();
         if (res.success) setStatus(res.data);
-      } catch (e) {
+      } catch {
         setError(true);
       } finally {
         setLoading(false);

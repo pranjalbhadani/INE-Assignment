@@ -29,8 +29,8 @@ export function RunScrapeButton({ productId, onComplete }: RunScrapeButtonProps)
         }
       }
       onComplete(); // Trigger parent reload
-    } catch (err: any) {
-      setError(err.message || "Failed to trigger scrape API");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to trigger scrape API");
     } finally {
       setRunning(false);
     }

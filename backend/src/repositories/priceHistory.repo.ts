@@ -26,7 +26,7 @@ export const priceHistoryRepo = {
   },
   async create(input: any, client?: any): Promise<PriceHistoryRow> {
     const runner = client ?? (await db());
-    const { rows } = await runner.query<PriceHistoryRow>(
+    const { rows } = await runner.query(
       `INSERT INTO price_history
          (tracked_product_id, scrape_attempt_id, price, mrp, currency, stock, stock_status, seller)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -36,6 +36,6 @@ export const priceHistoryRepo = {
         input.currency ?? 'INR', input.stock, input.stock_status, input.seller ?? null
       ]
     );
-    return rows[0]!;
+    return rows[0] as PriceHistoryRow;
   },
 };

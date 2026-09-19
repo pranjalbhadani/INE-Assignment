@@ -35,7 +35,7 @@ export const api = {
   // Products
   getTrackedProducts: () => fetchApi<TrackedProduct[]>('/tracked-products'),
   getTrackedProduct: (id: string) => fetchApi<TrackedProduct>(`/tracked-products/${id}`),
-  searchProducts: (query: string) => fetchApi<any>(`/products/search?q=${encodeURIComponent(query)}`), // Using any for store products
+  searchProducts: (query: string) => fetchApi<Record<string, unknown>[]>(`/products/search?q=${encodeURIComponent(query)}`), // Using any for store products
   trackProduct: (storeProductId: string) => fetchApi<TrackedProduct>('/tracked-products', {
     method: 'POST',
     body: JSON.stringify({ store_product_id: storeProductId })
@@ -50,5 +50,5 @@ export const api = {
   runScrape: (id: string) => fetchApi<ScrapeAttempt>(`/tracked-products/${id}/scrape`, { method: 'POST' }),
 
   // System Health
-  getHealth: () => fetchApi<any>('/health')
+  getHealth: () => fetchApi<Record<string, unknown>>('/health')
 };

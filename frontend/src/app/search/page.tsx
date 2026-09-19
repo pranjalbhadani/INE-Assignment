@@ -8,10 +8,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
+interface StoreSearchResult {
+  id: string | number;
+  name: string;
+  brand: string;
+  category: string;
+  sku: string;
+  price: string | number;
+  stock: number;
+}
+
 export default function SearchPage() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<StoreSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [trackingId, setTrackingId] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
@@ -24,8 +34,8 @@ export default function SearchPage() {
     setHasSearched(true);
     try {
       const res = await api.searchProducts(query);
-      if (res.success) {
-        setResults(res.data);
+      if (res.success && res.data) {
+        setResults(res.data as unknown as StoreSearchResult[]);
       }
     } catch (err) {
       console.error(err);
@@ -82,7 +92,7 @@ export default function SearchPage() {
         
         {!loading && hasSearched && results.length === 0 && (
           <div className="text-center py-12 text-zinc-500">
-            No products found matching "{query}"
+            No products found matching &quot;{query}&quot;
           </div>
         )}
 

@@ -81,12 +81,12 @@ export async function runSingleProduct(product: TrackedProduct, options: ScrapeO
 
     // Update Product
     await trackedProductRepo.update(product.id, {
-      last_known_price: quote.price,
-      last_known_mrp: quote.mrp,
+      last_known_price: quote.price.toString(),
+      last_known_mrp: quote.mrp ? quote.mrp.toString() : null,
       last_known_stock: quote.stock,
       last_known_stock_status: quote.stock_status,
       last_scrape_status: 'success',
-      last_scraped_at: new Date(),
+      last_scraped_at: new Date().toISOString(),
       consecutive_failures: 0
     });
 
@@ -172,7 +172,6 @@ async function executeBrowserScrape(
     // Write failure attempt immediately
     try {
       await scrapeAttemptRepo.create({
-        id: attemptId,
         scrape_run_id: runId,
         tracked_product_id: product.id,
         attempt_number: attemptNumber,

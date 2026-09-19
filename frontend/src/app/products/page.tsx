@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ExternalLink, Package } from "lucide-react";
 import { api } from "@/lib/api";
 import { TrackedProduct } from "@/types/api";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,

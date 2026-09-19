@@ -66,7 +66,7 @@ export function PriceHistoryChart({ productId }: PriceHistoryChartProps) {
           <Tooltip 
             contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', color: '#f4f4f5' }}
             itemStyle={{ color: '#34d399' }}
-            formatter={(value: any) => [`₹${value}`, 'Price']}
+            formatter={(value: string | number | undefined | null | ReadonlyArray<string | number>) => [`₹${value}`, 'Price']}
           />
           <Line 
             type="monotone" 

@@ -1,30 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Activity, Database, Server, RefreshCw } from "lucide-react";
+import { Server, RefreshCw } from "lucide-react";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
 export default function HealthPage() {
-  const [health, setHealth] = useState<any>(null);
+  const [health, setHealth] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const res = await api.getHealth();
-      setHealth(res);
-    } catch (err) {
-      console.error(err);
-      setHealth({ success: false, status: 'error', error: String(err) });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [refreshCount, setRefreshCount] = useState(0);
 
   useEffect(() => {
+    let ignore = false;
+    async function loadData() {
+      setLoading(true);
+      try {
+        const res = await api.getHealth();
+        if (!ignore) setHealth(res as unknown as Record<string, unknown>);
+      } catch (err) {
+        console.error(err);
+        if (!ignore) setHealth({ success: false, status: 'error', error: String(err) });
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
     loadData();
-  }, []);
+    return () => { ignore = true; };
+  }, [refreshCount]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -33,7 +35,7 @@ export default function HealthPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white">System Health</h1>
           <p className="text-zinc-400 mt-1">Backend service status and connectivity.</p>
         </div>
-        <Button variant="outline" onClick={loadData} disabled={loading} className="border-zinc-700 text-zinc-300 hover:text-white">
+        <Button variant="outline" onClick={() => setRefreshCount(c => c + 1)} disabled={loading} className="border-zinc-700 text-zinc-300 hover:text-white">
           <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh
         </Button>

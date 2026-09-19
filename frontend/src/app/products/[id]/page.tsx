@@ -25,25 +25,30 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
   const [product, setProduct] = useState<TrackedProduct | null>(null);
   const [scrapes, setScrapes] = useState<ScrapeAttempt[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const loadData = async () => {
-    try {
-      const [prodRes, scrapesRes] = await Promise.all([
-        api.getTrackedProduct(id),
-        api.getScrapeHistory(id)
-      ]);
-      if (prodRes.success) setProduct(prodRes.data);
-      if (scrapesRes.success) setScrapes(scrapesRes.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [refreshCount, setRefreshCount] = useState(0);
 
   useEffect(() => {
+    let ignore = false;
+    async function loadData() {
+      setLoading(true);
+      try {
+        const [prodRes, scrapesRes] = await Promise.all([
+          api.getTrackedProduct(id),
+          api.getScrapeHistory(id)
+        ]);
+        if (!ignore) {
+          if (prodRes.success) setProduct(prodRes.data);
+          if (scrapesRes.success) setScrapes(scrapesRes.data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
     loadData();
-  }, [id]);
+    return () => { ignore = true; };
+  }, [id, refreshCount]);
 
   if (loading) {
     return <div className="flex h-64 items-center justify-center text-zinc-500">Loading product details...</div>;
@@ -76,7 +81,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
               View Original Product
             </a>
           </div>
-          <RunScrapeButton productId={product.id} onComplete={loadData} />
+          <RunScrapeButton productId={product.id} onComplete={() => setRefreshCount(c => c + 1)} />
         </div>
       </div>
 
@@ -113,7 +118,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
       <div className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-white">Scrape Log</h2>
-          <Button variant="ghost" size="sm" onClick={loadData} className="text-zinc-400 hover:text-white">
+          <Button variant="ghost" size="sm" onClick={() => setRefreshCount(c => c + 1)} className="text-zinc-400 hover:text-white">
             <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
           </Button>
