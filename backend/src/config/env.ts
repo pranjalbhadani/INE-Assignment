@@ -32,7 +32,7 @@ if (!_parsed.success) {
   process.exit(1);
 }
 
-export const env = _parsed.data;
+export const env: z.infer<typeof EnvSchema> = _parsed.data!;
 
 // Runtime invariant: lock TTL must exceed scrape timeout
 if (env.SCRAPE_LOCK_TTL_MS <= env.SCRAPE_TIMEOUT_MS) {

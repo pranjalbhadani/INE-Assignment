@@ -28,9 +28,9 @@ export async function extractProductData(page: Page): Promise<ParsedPayload> {
     if (!priceEl) return null;
     
     // We modify the live DOM temporarily because cloneNode doesn't compute styles for display:none
-    priceEl.querySelectorAll('[aria-hidden="true"]').forEach(el => el.remove());
-    priceEl.querySelectorAll('[data-price="true"]').forEach(el => el.remove());
-    priceEl.querySelectorAll('[class*="mr-"], [class*="mrp"]').forEach(el => el.remove());
+    priceEl.querySelectorAll('[aria-hidden="true"]').forEach((el: Element) => el.remove());
+    priceEl.querySelectorAll('[data-price="true"]').forEach((el: Element) => el.remove());
+    priceEl.querySelectorAll('[class*="mr-"], [class*="mrp"]').forEach((el: Element) => el.remove());
     
     return (priceEl as HTMLElement).innerText;
   }).catch(e => {
