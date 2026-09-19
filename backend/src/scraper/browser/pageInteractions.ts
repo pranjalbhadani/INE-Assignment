@@ -7,6 +7,9 @@ export async function navigateToProduct(page: Page, targetUrl: string): Promise<
     if (res?.status() === 404) {
       throw new PermanentError('navigation', 'permanent_selector_missing', 'Product page returned 404');
     }
+    if (res?.status() && res.status() >= 500) {
+      throw new TransientError('navigation', 'transient_5xx', `Product page returned ${res.status()}`);
+    }
   } catch (err) {
     if (err instanceof PermanentError) throw err;
     throw new TransientError('navigation', 'transient_network', `Navigation failed: ${err}`);

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+scratch/
+test-results/
+playwright-report/
+playwright/.cache/
+*.log
+.DS_Store

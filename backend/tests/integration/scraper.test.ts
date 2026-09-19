@@ -58,8 +58,11 @@ describe('Scraper Integration Tests', () => {
     mockHtml = `
       <html>
         <body>
-          <div class="sku-tag">SKU: 123</div>
+          <div class="sku-tag">SKU: SKU1</div>
           <div class="brand-tag">TestBrand</div>
+          <div class="price-block" style="width: 200px; height: 100px;">
+            <button aria-label="Reveal price"></button>
+          </div>
           <div class="price-success">
             <div class="pv-1">₹1,500</div>
           </div>
@@ -84,12 +87,23 @@ describe('Scraper Integration Tests', () => {
     expect(updatedProduct!.last_scrape_status).toBe('success');
     expect(updatedProduct!.last_known_price).toBe('1500.00'); // numeric string
 
-    const history = await priceHistoryRepo.getLatestForProduct(product.id);
+    const historyRows = await priceHistoryRepo.findByProduct(product.id, 1);
+    const history = historyRows[0] ?? null;
     expect(history).not.toBeNull();
     expect(history!.price).toBe('1500.00');
   });
 
   it('records transient failure on 5xx', async () => {
+    mockHtml = `
+      <html>
+        <body>
+          <div class="price-block" style="width: 200px; height: 100px;">
+            <button aria-label="Reveal price"></button>
+          </div>
+          <div class="price-error">500 Server error</div>
+        </body>
+      </html>
+    `;
     // We expect the scraper to retry because of 5xx, but since we keep returning 500,
     // it will eventually fail permanently after max retries or timeout.
     // For this test, we just ensure it records a failure.
@@ -117,7 +131,8 @@ describe('Scraper Integration Tests', () => {
       expect(updatedProduct!.consecutive_failures).toBeGreaterThan(0);
 
       // Verify no price history was created
-      const history = await priceHistoryRepo.getLatestForProduct(product.id);
+      const historyRows = await priceHistoryRepo.findByProduct(product.id, 1);
+      const history = historyRows[0] ?? null;
       expect(history).toBeNull();
       
       // Should have attempted multiple times
@@ -131,7 +146,13 @@ describe('Scraper Integration Tests', () => {
     mockHtml = `
       <html>
         <body>
-          <!-- Missing .price-success -->
+          <div class="price-block" style="width: 200px; height: 100px;">
+            <button aria-label="Reveal price"></button>
+          </div>
+          <div class="price-success">
+            <!-- Missing .pv- class and valid price -->
+            <div>Invalid</div>
+          </div>
         </body>
       </html>
     `;
@@ -158,6 +179,6 @@ describe('Scraper Integration Tests', () => {
     
     expect(latestAttempt).toBeDefined();
     expect(latestAttempt.status).toBe('failed');
-    expect(latestAttempt.error_type).toBe('permanent_selector_missing');
+    expect(latestAttempt.error_type).toBe('permanent_parse_error');
   });
 });
