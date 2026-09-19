@@ -59,6 +59,12 @@ This report details the successful execution of Phase 5. The primary objective w
 - **Bug Fixed:** Disabled vitest file parallelism (`--no-file-parallelism`) for backend tests to allow sequential setup/teardown of test databases.
 - **Bug Found:** Frontend compilation failed on TypeScript type-checking for health APIs and Search page `ApiResponse` mapping.
 - **Bug Fixed:** Corrected generic interfaces and strictly cast values returned by the data `ApiResponse` wrapper payload in `health/page.tsx`, `search/page.tsx`, and `PriceHistoryChart.tsx`.
+- **Bug Found:** During Render deployment, the backend startup crashed with `Cannot find module '/opt/render/project/src/backend/dist/index.js'` and TypeScript compilation failed.
+- **Bug Fixed:** Moved `typescript` and `@types/express` from `devDependencies` to `dependencies` because Render's production environment skips devDependencies. Updated `tsconfig.json` `rootDir` and `render.yaml` root directory to align the compiled output path.
+- **Bug Found:** The production Vercel frontend displayed "API Server — Offline" despite the Render backend being healthy.
+- **Bug Fixed:** Identified that `NEXT_PUBLIC_API_URL` was misconfigured to the root Render URL. Documented the requirement for the environment variable to explicitly include the `/api` path suffix without a trailing slash (e.g., `https://ine-assignment-mkg7.onrender.com/api`).
+- **Bug Found:** The live dashboard showed a 94.12% failure rate immediately after deployment.
+- **Bug Fixed:** Discovered that development and dummy seed artifacts (`verify-fail`, `TEST-DB-1`) were written to the production database during Phase 5 testing. Executed a clean, targeted single-transaction SQL deletion to scrub 100% of the test contamination without dropping tables.
 
 ## 7. Regression Tests Added
 - Added `tests/integration/scraper.test.ts` to mock the storefront providing the exact DOM structure observed in Product 12, forcing the scraper to extract only valid text. If any honeypot text leaks, the assertion fails, acting as a regression net for price extraction.
