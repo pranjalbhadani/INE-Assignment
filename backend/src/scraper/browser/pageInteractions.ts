@@ -16,14 +16,34 @@ export async function navigateToProduct(page: Page, targetUrl: string): Promise<
   }
 }
 
+// export async function dismissCookieOverlayIfPresent(page: Page): Promise<void> {
+//   try {
+//     const acceptBtn = page.locator('button[aria-label="Accept cookies"]');
+//     if (await acceptBtn.isVisible({ timeout: 2000 })) {
+//       await acceptBtn.click();
+//     }
+//   } catch (err) {
+//     // Ignore if not found or couldn't click, it's optional
+//   }
+// }
+
 export async function dismissCookieOverlayIfPresent(page: Page): Promise<void> {
+  const overlay = page.locator('.cookie-overlay');
+  const acceptBtn = page.locator('button[aria-label="Accept cookies"]');
+
   try {
-    const acceptBtn = page.locator('button[aria-label="Accept cookies"]');
-    if (await acceptBtn.isVisible({ timeout: 2000 })) {
-      await acceptBtn.click();
+    // Wait briefly for the cookie overlay to appear.
+    await overlay.waitFor({ state: 'visible', timeout: 5000 });
+
+    // If the accept button is present, click it.
+    if (await acceptBtn.count() > 0) {
+      await acceptBtn.click({ timeout: 5000 });
     }
-  } catch (err) {
-    // Ignore if not found or couldn't click, it's optional
+
+    // Do not continue until the overlay is actually gone.
+    await overlay.waitFor({ state: 'hidden', timeout: 5000 });
+  } catch {
+    // No cookie overlay appeared; continue normally.
   }
 }
 
