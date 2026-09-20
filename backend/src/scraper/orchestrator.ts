@@ -39,6 +39,7 @@ export async function runSingleProduct(product: TrackedProduct, options: ScrapeO
   let lock: { acquired: boolean; lock_token?: string } = { acquired: false };
   let actualRunId: string | null = null;
   let runCreated = false;
+  let session: BrowserSession | null = null;
 
   console.log(`[Scrape Start] Product ${product.store_product_id} (ID: ${product.id})`);
 
@@ -56,9 +57,13 @@ export async function runSingleProduct(product: TrackedProduct, options: ScrapeO
     runCreated = true;
 
     // 3. Execute Scrape with Retry
+    const headless = options.headless ?? true;
+    console.log(`[Browser] Launching isolated session (headless: ${headless})`);
+    session = await createIsolatedSession(headless);
+
     const result = await withRetry(async (attemptNumber) => {
       console.log(`[Attempt ${attemptNumber}] Product ${product.store_product_id}`);
-      return await executeBrowserScrape(product, attemptNumber, actualRunId!, options.headless ?? true);
+      return await executeBrowserScrape(product, attemptNumber, actualRunId!, session!);
     }, deadlineMs);
 
     const { quote, attemptId } = result;
@@ -99,6 +104,11 @@ export async function runSingleProduct(product: TrackedProduct, options: ScrapeO
       await trackedProductRepo.incrementFailure(product.id);
     }
   } finally {
+    if (session) {
+      console.log(`[Browser] Cleaning up session`);
+      await session.close();
+    }
+
     // 6. Release Lock
     if (lock.acquired && lock.lock_token) {
       await scrapeLockRepo.release(product.id, lock.lock_token);
@@ -111,15 +121,12 @@ async function executeBrowserScrape(
   product: TrackedProduct,
   attemptNumber: number,
   runId: string,
-  headless: boolean
+  session: BrowserSession
 ) {
   const startTime = Date.now();
-  let session: BrowserSession | null = null;
   let attemptId = uuidv4();
   
   try {
-    console.log(`  [Browser] Launching isolated session (headless: ${headless})`);
-    session = await createIsolatedSession(headless);
     const { page } = session;
 
     console.log(`  [Browser] Navigating to ${product.target_url}`);
@@ -186,11 +193,6 @@ async function executeBrowserScrape(
     }
 
     throw error; // Rethrow to trigger retry logic
-  } finally {
-    if (session) {
-      console.log(`  [Browser] Cleaning up session`);
-      await session.close();
-    }
   }
 }
 

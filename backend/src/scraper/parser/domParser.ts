@@ -40,7 +40,7 @@ export async function extractProductData(page: Page): Promise<ParsedPayload> {
   if (!validPriceText) {
     throw new PermanentError('parsing', 'permanent_parse_error', 'Unambiguous real price element could not be found');
   }
-
+  
   const price = sanitizePriceText(validPriceText);
   if (price === null) {
     throw new PermanentError('parsing', 'permanent_parse_error', `Could not sanitize price text: ${validPriceText}`);

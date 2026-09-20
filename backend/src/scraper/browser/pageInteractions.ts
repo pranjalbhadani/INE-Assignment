@@ -27,23 +27,50 @@ export async function navigateToProduct(page: Page, targetUrl: string): Promise<
 //   }
 // }
 
+// export async function dismissCookieOverlayIfPresent(page: Page): Promise<void> {
+//   const overlay = page.locator('.cookie-overlay');
+//   const acceptBtn = page.locator('button[aria-label="Accept cookies"]');
+
+//   try {
+//     // Wait briefly for the cookie overlay to appear.
+//     await overlay.waitFor({ state: 'visible', timeout: 5000 });
+
+//     // If the accept button is present, click it.
+//     if (await acceptBtn.count() > 0) {
+//       await acceptBtn.click({ timeout: 5000 });
+//     }
+
+//     // Do not continue until the overlay is actually gone.
+//     await overlay.waitFor({ state: 'hidden', timeout: 5000 });
+//   } catch {
+//     // No cookie overlay appeared; continue normally.
+//   }
+// }
+
 export async function dismissCookieOverlayIfPresent(page: Page): Promise<void> {
   const overlay = page.locator('.cookie-overlay');
   const acceptBtn = page.locator('button[aria-label="Accept cookies"]');
 
   try {
-    // Wait briefly for the cookie overlay to appear.
-    await overlay.waitFor({ state: 'visible', timeout: 5000 });
+    // Give the overlay a short chance to appear.
+    await overlay.waitFor({
+      state: 'visible',
+      timeout: 1500,
+    });
 
-    // If the accept button is present, click it.
-    if (await acceptBtn.count() > 0) {
-      await acceptBtn.click({ timeout: 5000 });
+    if (await acceptBtn.isVisible().catch(() => false)) {
+      await acceptBtn.click({
+        timeout: 2000,
+      });
     }
 
-    // Do not continue until the overlay is actually gone.
-    await overlay.waitFor({ state: 'hidden', timeout: 5000 });
+    // Make sure the overlay is actually gone before continuing.
+    await overlay.waitFor({
+      state: 'hidden',
+      timeout: 2000,
+    });
   } catch {
-    // No cookie overlay appeared; continue normally.
+    // Overlay did not appear or was already gone.
   }
 }
 
@@ -82,22 +109,63 @@ export async function performHumanInteraction(page: Page): Promise<void> {
   }
 }
 
+// export async function triggerReveal(page: Page): Promise<void> {
+//   try {
+//     const revealBtn = page.locator('button[aria-label="Reveal price"]');
+    
+//     // Wait for the button to become enabled (human interaction satisfies this)
+//     await revealBtn.waitFor({ state: 'attached', timeout: 5000 });
+    
+//     const isDisabled = await revealBtn.isDisabled();
+//     if (isDisabled) {
+//       throw new TransientError('interaction_hover', 'transient_timeout', 'Reveal button did not become enabled after interaction');
+//     }
+
+//     await revealBtn.click();
+//   } catch (err) {
+//     if (err instanceof TransientError) throw err;
+//     throw new TransientError('interaction_hover', 'transient_timeout', `Could not click reveal: ${err}`);
+//   }
+// }
+
 export async function triggerReveal(page: Page): Promise<void> {
   try {
     const revealBtn = page.locator('button[aria-label="Reveal price"]');
-    
-    // Wait for the button to become enabled (human interaction satisfies this)
-    await revealBtn.waitFor({ state: 'attached', timeout: 5000 });
-    
-    const isDisabled = await revealBtn.isDisabled();
-    if (isDisabled) {
-      throw new TransientError('interaction_hover', 'transient_timeout', 'Reveal button did not become enabled after interaction');
+
+    // Wait for the Reveal button to appear.
+    await revealBtn.waitFor({
+      state: 'visible',
+      timeout: 5000,
+    });
+
+    // Wait until the site actually enables the button.
+    // Poll frequently so we continue immediately once it becomes enabled.
+    await page.waitForFunction(
+      () => {
+        const button = document.querySelector(
+          'button[aria-label="Reveal price"]'
+        ) as HTMLButtonElement | null;
+
+        return button !== null && !button.disabled;
+      },
+      {
+        timeout: 10000,
+        polling: 200,
+      }
+    );
+
+    // Click as soon as it becomes enabled.
+    await revealBtn.click({ timeout: 5000 });
+  } catch (err) {
+    if (err instanceof TransientError) {
+      throw err;
     }
 
-    await revealBtn.click();
-  } catch (err) {
-    if (err instanceof TransientError) throw err;
-    throw new TransientError('interaction_hover', 'transient_timeout', `Could not click reveal: ${err}`);
+    throw new TransientError(
+      'interaction_hover',
+      'transient_timeout',
+      `Could not click reveal: ${err}`
+    );
   }
 }
 
