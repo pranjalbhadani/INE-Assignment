@@ -24,6 +24,35 @@ export async function createIsolatedSession(headless = true): Promise<BrowserSes
 
   const page = await context.newPage();
 
+//   await page.addLocatorHandler(
+//   page.locator('.cookie-overlay'),
+//   async () => {
+//     const acceptBtn = page.locator(
+//       'button[aria-label="Accept cookies"]'
+//     );
+
+//     if (await acceptBtn.isVisible().catch(() => false)) {
+//       await acceptBtn.click({ timeout: 2000 });
+//     }
+//   }
+// );
+
+await page.addLocatorHandler(
+  page.locator('.cookie-overlay'),
+  async () => {
+    try {
+      const acceptBtn = page.locator(
+        'button[aria-label="Accept cookies"]'
+      );
+
+      if (await acceptBtn.isVisible().catch(() => false)) {
+        await acceptBtn.click({ timeout: 1000 }).catch(() => {});
+      }
+    } catch {
+      // Cookie overlay is optional and may disappear during rerender.
+    }
+  }
+);
   return {
     browser,
     context,
