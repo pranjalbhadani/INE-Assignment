@@ -9,13 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface StoreSearchResult {
-  id: string | number;
+  store_product_id: string;
   name: string;
   brand: string;
   category: string;
   sku: string;
-  price: string | number;
-  stock: number;
 }
 
 export default function SearchPage() {
@@ -99,7 +97,7 @@ export default function SearchPage() {
         {!loading && results.length > 0 && (
           <div className="grid gap-4">
             {results.map((product) => (
-              <Card key={product.id} className="border-zinc-800 bg-zinc-950/50">
+              <Card key={product.store_product_id} className="border-zinc-800 bg-zinc-950/50">
                 <CardContent className="flex items-center justify-between p-6">
                   <div>
                     <h3 className="font-semibold text-lg text-white">{product.name}</h3>
@@ -112,20 +110,12 @@ export default function SearchPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
-                    <div className="text-right">
-                      <div className="text-lg font-mono text-zinc-300">₹{product.price}</div>
-                      {product.stock > 0 ? (
-                        <div className="text-xs text-emerald-500">{product.stock} in stock</div>
-                      ) : (
-                        <div className="text-xs text-red-500">Out of stock</div>
-                      )}
-                    </div>
                     <Button 
-                      onClick={() => handleTrack(product.id.toString())}
-                      disabled={trackingId === product.id.toString()}
+                      onClick={() => handleTrack(product.store_product_id)}
+                      disabled={trackingId === product.store_product_id}
                       className="bg-zinc-800 hover:bg-indigo-600 text-white"
                     >
-                      {trackingId === product.id.toString() ? (
+                      {trackingId === product.store_product_id ? (
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />
                       ) : (
                         <Plus className="h-4 w-4 mr-2" />

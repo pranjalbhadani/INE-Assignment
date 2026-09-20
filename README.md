@@ -29,35 +29,99 @@ A sophisticated product price intelligence and scraper observability system buil
 
 ## Local Setup
 
-### 1. Install Dependencies
-Run `npm install` in both `/backend` and `/frontend`.
+### 1. Prerequisites
+- **Node.js**: v18 or higher
+- **npm**: v9 or higher
+- **PostgreSQL**: Local instance or hosted Supabase database
 
-### 2. Environment Variables
-You need to configure the following environment variable names (refer to the respective `.env.example` files):
+### 2. Environment Configuration
 
-**Backend (`backend/.env`)**
-- `PORT`
-- `DATABASE_URL`
-- `CRON_SECRET`
-- `SHOW_BROWSER` (Set to `true` for headed Playwright scraping)
+#### Backend (`backend/.env`)
+Copy the example configuration:
+```bash
+cp backend/.env.example backend/.env
+```
+Ensure the following variables are configured in `backend/.env`:
+- `DATABASE_URL`: PostgreSQL connection string (e.g., Supabase session connection)
+- `PORT`: Server port (defaults to `3001`)
+- `CRON_SECRET`: Secret token for protecting scrape trigger endpoints
+- `FRONTEND_ORIGIN`: Allowed CORS origin for the dashboard (e.g., `http://localhost:3000`)
 
-**Frontend (`frontend/.env.local`)**
-- `NEXT_PUBLIC_API_URL`
+#### Frontend (`frontend/.env.local`)
+Create `frontend/.env.local` if you need to point to a custom API port or remote server (defaults to `http://localhost:3001/api` if omitted):
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
 
-### 3. Start Development Servers
-- Backend: `npm run dev --prefix backend`
-- Frontend: `npm run dev --prefix frontend`
+---
 
-## Commands
-- **Test Commands**:
-  - `npm run test --prefix backend` (Backend Unit/Integration Tests)
-  - `npm run test:e2e --prefix frontend` (Frontend End-to-End Tests)
-  - `npm run type-check --prefix backend` (Backend TypeScript validation)
-  - `npm run lint --prefix frontend` (Frontend Linting)
+### 3. Quick Start (Two Workflows)
 
-- **Headed Scraper Command**:
-  To run the scraper in headed mode and visually watch Playwright circumvent challenges:
-  `SHOW_BROWSER=true npm run dev --prefix backend`
+> [!IMPORTANT]
+> **Working Directory Note**:
+> - If running commands with `--prefix <folder>`, ensure your terminal is in the **repository root** (`INE Assignment/`).
+> - If you navigate directly into `backend/` or `frontend/` using `cd`, run the standard commands (`npm install`, `npm run dev`) **without** the `--prefix` flag.
+
+#### Method A: Running from Repository Root
+
+Open two separate terminals in the repository root:
+
+1. **Install Dependencies & Playwright**:
+   ```bash
+   npm install --prefix backend
+   npm install --prefix frontend
+   npx --prefix backend playwright install chromium
+   ```
+
+2. **Run Database Migrations**:
+   ```bash
+   npm run migrate --prefix backend
+   ```
+
+3. **Start Development Servers**:
+   - **Terminal 1 (Backend API on http://localhost:3001)**:
+     ```bash
+     npm run dev --prefix backend
+     ```
+   - **Terminal 2 (Frontend Dashboard on http://localhost:3000)**:
+     ```bash
+     npm run dev --prefix frontend
+     ```
+
+#### Method B: Running Inside Subdirectories
+
+Open two separate terminals:
+
+- **Terminal 1: Backend**
+  ```bash
+  cd backend
+  npm install
+  npx playwright install chromium
+  npm run migrate
+  npm run dev
+  ```
+
+- **Terminal 2: Frontend**
+  ```bash
+  cd frontend
+  npm install
+  npm run dev
+  ```
+
+---
+
+## Commands Reference
+
+| Action | From Project Root | Inside Subdirectory |
+| :--- | :--- | :--- |
+| **Backend Dev Server** | `npm run dev --prefix backend` | `cd backend && npm run dev` |
+| **Frontend Dev Server** | `npm run dev --prefix frontend` | `cd frontend && npm run dev` |
+| **Backend Tests** | `npm run test --prefix backend` | `cd backend && npm test` |
+| **Frontend E2E Tests** | `npm run test:e2e --prefix frontend` | `cd frontend && npm run test:e2e` |
+| **Backend Type Check** | `npm run type-check --prefix backend` | `cd backend && npm run type-check` |
+| **Frontend Lint** | `npm run lint --prefix frontend` | `cd frontend && npm run lint` |
+| **Run All Checks** | `npm run test:all` | — |
+| **Headed Scraper (Watch Browser)** | `npm run scrape:headed --prefix backend -- --product 675` | `cd backend && npm run scrape:headed -- --product 675` |
 
 ## Known Limitations
 - High concurrency scraping relies on PostgreSQL locks, which may become a bottleneck at massive scale compared to a distributed queue like Redis.

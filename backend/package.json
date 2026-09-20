@@ -22,6 +22,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "helmet": "^8.0.0",
+    "ine-assignment": "file:..",
     "pg": "^8.12.0",
     "playwright": "^1.63.0",
     "typescript": "5.9.3",

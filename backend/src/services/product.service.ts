@@ -18,32 +18,132 @@ export interface StoreProduct {
 
 const STORE_BASE_URL = 'https://demo.inelabteamdev.com';
 
+const MAX_SEARCH_REQUESTS = 15;
+const SEARCH_PAGE_SIZE = 60;
+const SEARCH_REQUEST_DELAY_MS = 200;
+const MAX_SEARCH_RESULTS = 20;
+
+function normalize(text: string) {
+  return (text || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
 /**
  * Search the store for products matching the query.
- * The demo store uses React rendered HTML; we fetch and parse static metadata.
- * Price/stock are intentionally excluded here — those require the full Playwright
- * scraper (Phase 3).
+ * Due to the upstream API's randomized nature and lack of deterministic text search,
+ * this function implements a hybrid approach:
+ * 1. Direct ID/SKU lookups (Priority 4)
+ * 2. Bounded polling over the randomized catalog for text searches.
+ * Note: Because the text search relies on a bounded randomized source, it cannot
+ * mathematically guarantee discovery of every matching product on every attempt.
  */
 export async function searchStoreProducts(query: string): Promise<StoreProduct[]> {
-  if (!query.trim()) return [];
+  const normQuery = normalize(query);
+  if (!normQuery) return [];
 
-  const url = `${STORE_BASE_URL}/search?q=${encodeURIComponent(query)}`;
-
-  let html: string;
-  try {
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'INEPriceTracker/1.0' },
-      signal: AbortSignal.timeout(10_000),
-    });
-    if (!res.ok) throw new Error(`Store responded with ${res.status}`);
-    html = await res.text();
-  } catch (err) {
-    throw new Error(
-      `Failed to reach the demo store: ${err instanceof Error ? err.message : String(err)}`
-    );
+  // A. NUMERIC PRODUCT ID
+  if (/^\d+$/.test(normQuery)) {
+    const item = await resolveProductMetadata(normQuery);
+    if (item && item.store_product_id === normQuery) return [item];
+    return [];
   }
 
-  return parseSearchResults(html, query);
+  // B. SKU LOOKUP
+  const skuMatch = normQuery.match(/^[a-z]+-10(\d{3})$/);
+  if (skuMatch) {
+    const extractedId = skuMatch[1];
+    const item = await resolveProductMetadata(extractedId);
+    if (item && normalize(item.sku) === normQuery) return [item];
+    // If SKU mapping is invalid, fall through to text search.
+  }
+
+  // C. TEXT SEARCH (Bounded Polling)
+  const results = new Map<string, StoreProduct & { _matchType: number }>();
+  let earlyExit = false;
+
+  for (let page = 1; page <= MAX_SEARCH_REQUESTS; page++) {
+    let jsonResponse: any;
+    try {
+      const url = `${STORE_BASE_URL}/api/catalog?page=${page}&pageSize=${SEARCH_PAGE_SIZE}`;
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'INEPriceTracker/1.0', 'Accept': 'application/json' },
+        signal: AbortSignal.timeout(10_000),
+      });
+
+      if (res.status === 503) {
+        break; // Rate limit hit. Stop gracefully.
+      }
+      if (!res.ok) {
+        break;
+      }
+      jsonResponse = await res.json();
+    } catch (err) {
+      break;
+    }
+
+    const items = jsonResponse?.items || [];
+    
+    // D. FILTER AFTER FETCH
+    for (const item of items) {
+      const strId = String(item.id);
+      if (!item.id || results.has(strId)) continue;
+
+      const normName = normalize(item.name);
+      const normBrand = normalize(item.brand);
+      const normCat = normalize(item.category);
+      const normSku = normalize(item.sku);
+
+      let isMatch = false;
+      let matchType = 99;
+
+      // E. EXACT MATCH PRIORITY
+      if (strId === normQuery) { isMatch = true; matchType = 1; }
+      else if (normSku === normQuery) { isMatch = true; matchType = 2; }
+      else if (normName === normQuery) { isMatch = true; matchType = 3; }
+      else if (normName.includes(normQuery)) { isMatch = true; matchType = 4; }
+      else if (normBrand && normBrand.includes(normQuery)) { isMatch = true; matchType = 5; }
+      else if (normCat && normCat.includes(normQuery)) { isMatch = true; matchType = 6; }
+
+      if (isMatch) {
+        results.set(strId, {
+          store_product_id: strId,
+          slug: item.slug || `product-${strId}`,
+          name: item.name || `Product ${strId}`,
+          brand: item.brand || 'Unknown',
+          category: item.category || 'General',
+          sku: item.sku || `SKU-${strId}`,
+          target_url: `${STORE_BASE_URL}/product/${strId}`,
+          _matchType: matchType
+        });
+
+        // Stop early if we find a strong/exact match
+        if (matchType <= 3) {
+          earlyExit = true;
+          break;
+        }
+      }
+    }
+
+    if (earlyExit) break;
+    // Stop early if we have enough partial matches
+    if (results.size >= MAX_SEARCH_RESULTS) break;
+
+    // Rate limit protection
+    if (page < MAX_SEARCH_REQUESTS) {
+      await new Promise(resolve => setTimeout(resolve, SEARCH_REQUEST_DELAY_MS));
+    }
+  }
+
+  // F. NO-MATCH BEHAVIOR is implicitly handled (returns empty array if results is empty)
+  // G. STABILITY / DEDUPLICATION is handled by the Map
+
+  // Sort and extract final results
+  const sorted = Array.from(results.values()).sort((a, b) => a._matchType - b._matchType);
+  const finalResults = sorted.slice(0, MAX_SEARCH_RESULTS).map((item) => {
+    const { _matchType, ...cleanItem } = item;
+    return cleanItem;
+  });
+
+  return finalResults;
 }
 
 /**
@@ -52,111 +152,35 @@ export async function searchStoreProducts(query: string): Promise<StoreProduct[]
 export async function resolveProductMetadata(
   storeProductId: string
 ): Promise<StoreProduct | null> {
-  const url = `${STORE_BASE_URL}/product/${storeProductId}`;
+  // Use the underlying JSON API
+  const url = `${STORE_BASE_URL}/api/product/${storeProductId}`;
 
-  let html: string;
+  let item: any;
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'INEPriceTracker/1.0' },
+      headers: { 'User-Agent': 'INEPriceTracker/1.0', 'Accept': 'application/json' },
       signal: AbortSignal.timeout(10_000),
     });
     if (res.status === 404) return null;
     if (!res.ok) throw new Error(`Store responded with ${res.status}`);
-    html = await res.text();
+    item = await res.json();
+
+    // Ensure it didn't return an error JSON object
+    if (item.error) return null;
   } catch (err) {
     if (err instanceof Error && err.message.includes('404')) return null;
     throw new Error(
-      `Failed to reach the demo store: ${err instanceof Error ? err.message : String(err)}`
+      `Failed to reach the demo store API: ${err instanceof Error ? err.message : String(err)}`
     );
   }
 
-  return parseProductPage(html, storeProductId, url);
-}
-
-// ── Internal Parsers ─────────────────────────────────────────────────────────
-// Parse minimal product metadata from the store HTML.
-// We only need fields that are available without browser JavaScript execution.
-
-function parseSearchResults(html: string, _query: string): StoreProduct[] {
-  const results: StoreProduct[] = [];
-
-  // Match product card links: /product/<id>
-  const linkPattern = /href="\/product\/(\d+)"/g;
-  const seenIds = new Set<string>();
-  let match: RegExpExecArray | null;
-
-  while ((match = linkPattern.exec(html)) !== null) {
-    const id = match[1];
-    if (seenIds.has(id)) continue;
-    seenIds.add(id);
-
-    // Extract product name from nearby h2/h3 or data-name attribute
-    const meta = extractProductMeta(html, id);
-    if (meta) results.push(meta);
-    if (results.length >= 20) break; // Safety cap
-  }
-
-  return results;
-}
-
-function parseProductPage(
-  html: string,
-  storeProductId: string,
-  url: string
-): StoreProduct | null {
-  return extractProductMeta(html, storeProductId, url);
-}
-
-function extractProductMeta(
-  html: string,
-  id: string,
-  url?: string
-): StoreProduct | null {
-  // Extract name from <title> or og:title
-  const titleMatch =
-    html.match(/<meta property="og:title" content="([^"]+)"/) ??
-    html.match(/<title>([^<]+)<\/title>/);
-  const name = titleMatch ? decodeHtml(titleMatch[1].replace(/ - INE Store$/i, '').trim()) : `Product ${id}`;
-
-  // Extract brand from meta or data attributes
-  const brandMatch =
-    html.match(/data-brand="([^"]+)"/) ??
-    html.match(/"brand"\s*:\s*"([^"]+)"/) ??
-    html.match(/Brand[:\s]+([A-Za-z0-9\s]+)/);
-  const brand = brandMatch ? decodeHtml(brandMatch[1].trim()) : 'Unknown';
-
-  // Extract SKU
-  const skuMatch =
-    html.match(/data-sku="([^"]+)"/) ??
-    html.match(/"sku"\s*:\s*"([^"]+)"/) ??
-    html.match(/SKU[:\s]+([A-Za-z0-9-]+)/);
-  const sku = skuMatch ? skuMatch[1].trim() : `SKU-${id}`;
-
-  // Extract category
-  const catMatch =
-    html.match(/data-category="([^"]+)"/) ??
-    html.match(/"category"\s*:\s*"([^"]+)"/);
-  const category = catMatch ? decodeHtml(catMatch[1].trim()) : 'General';
-
-  const slug = `product-${id}`;
-  const targetUrl = url ?? `https://demo.inelabteamdev.com/product/${id}`;
-
   return {
-    store_product_id: id,
-    slug,
-    name,
-    brand,
-    category,
-    sku,
-    target_url: targetUrl,
+    store_product_id: String(item.id),
+    slug: item.slug || `product-${item.id}`,
+    name: item.name || `Product ${item.id}`,
+    brand: item.brand || 'Unknown',
+    category: item.category || 'General',
+    sku: item.sku || `SKU-${item.id}`,
+    target_url: `${STORE_BASE_URL}/product/${item.id}`,
   };
-}
-
-function decodeHtml(str: string): string {
-  return str
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
 }
